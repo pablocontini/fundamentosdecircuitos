@@ -9,8 +9,14 @@
 \usepackage[utf8]{inputenc} % set input encoding (not needed with XeLaTeX)
 \usepackage[spanish]{babel}
 \usepackage{caption}
+\usepackage{subcaption}
 \usepackage[toc,page]{appendix}
 \usepackage{fancyhdr}
+\usepackage{amsthm}
+\theoremstyle{definition}
+\newtheorem{exmp}{Ejemplo}[]
+
+
 \setlength{\headheight}{15pt}
 
 \pagestyle{fancy}
@@ -556,8 +562,116 @@ Para polarizar una juntura, es decir, aplicarle una diferencia de potencial, es 
 
 
 
+\chapter{Juntura Metal-Semiconductor}
+\chapter{Introducción a circuitos con diodos}
+\section{Características Estáticas de Dispositivos}
+Consideremos un dispositivo de dos terminales que denominaremos ``X'', que puede presentar tanto efectos reactivos como disipativos. La característica estática del dispositivo será una curva donde se lleve la corriente que lo atraviesa $I_x$ en función de la tensión aplicada externamente entre los dos bornes del dispositivo $V_x$. Para obtenerla experimentalmente deberán medirse cierta cantidad de pares de valores ($I_x$, $V_x$), los cuales podràn o no estar relacionados por una expresión conocida.
+
+La figura \ref{fig:c.1} muestra un posible circuito de medición, en el cual la resistencia $R$ se coloca a fin de limira la corriente máxima por el circuito -en particular cuando el dispositivo ``X'' presenta grandes aumentos de corrientes ante pequeños incrementos de tensión 
+
+\begin{figure}[!htbp]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=1]{figurac01.pdf}
+  \captionof{figure}{}
+  \label{fig:c.1}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=1]{figurac02.pdf}
+  \captionof{figure}{}
+  \label{fig:c.2}
+\end{minipage}
+\end{figure}
+
+Cada par de valores deberá ser medido de una vez que se hayan extinguido todos los transitorios producidos luego de cada incremento de $V_{BB}$ entre dos mediciones sucesivas. De ahí la denominación de \emph{característica estática}, lo cual implica que los efectos reactivos no influyen en su trazado.
+
+Definimos entonces como característica estática de un dispositivo de dos terminales al conjunto de valores estáticos ($I_x$, $V_x$), que son compatibles con el funcionamiento del dispositivo - figura \ref{fig:c.2}.
+
+\begin{exmp}
+Si el dispositivo es un resistor lineal e invariante en el tiempo, su característica estática será una recta determinada por la ley de Ohm $I_x=I_R=V_R/R=V_x/R$ - figura \ref{fig:c.3} -. Esta característica resulta válida dentro de límites prefijados de tensión y corriente dados por el fabricante.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=1]{figurac03.pdf}
+    \caption{}
+    \label{fig:c.3}
+\end{figure}
+
+\end{exmp}
+
+\begin{exmp}
+Para el caso de un diodo supuesto ideal, su característica estática será, de acuerdo a su funcionamiento físico, una curva exponencial definida por $I_D=I_S\left(e^{V_D/V_T}-1\right)$. Al medir un diodo real se hallarán desviaciones respecto de la característica idealizada, en las zonas en que no se verifiquen las hipótesis que llevan a la ecuación anterior - figura \ref{fig:c.4} -.
+
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=1]{figurac04.pdf}
+    \caption{}
+    \label{fig:c.4}
+\end{figure}
+
+Tal como se aclaró previamente, debe notarse que por tratarse de una característica estática las capacitancias parásitas u otros efectos reactivos del dispositivo no tienen influencia.
+\end{exmp}
+
+\section{Circuitos elementales con Diodos}
+
+\subsection{Circuito serie diodo-resistencia. Análisis estático}
+
+Consideramos un circuito con un diodo polarizado en directa en serie con una resistencia, alimentado por una fuente de tensión continua - figura \ref{fig:c.5} -.
+
+\begin{figure}[!htbp]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=1]{figurac05.pdf}
+  \captionof{figure}{}
+  \label{fig:c.5}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[scale=1]{figurac06.pdf}
+  \captionof{figure}{}
+  \label{fig:c.6}
+\end{minipage}
+\end{figure}
+
+Por el circuito circulará una corriente $I_D$, siendo $V_D$ y $V_{RC}$ las diferencia de potencial entre bornes del diodo y de la resistencia, respectivamente. Deberá cumplirse: $V_{BB}=V_{RC}+V_D=I_DR_C+V_D$.
+
+Luego:
+\[I_D=(V_{BB}-V_D)/R_C\]
+
+La expresión anterior llevada al plano ($I_D$, $V_D$) constituye la \textbf{recta de carga estática} para el diodo, y que representa el conjunto de pares de valores ($I_D$, $V_D$)  que satisfacen las condiciones de funcionamiento impuestas por los elementos del circuito externos al dispositivo.
+
+De la definición surge que la recta de carga estática no depende del dispositivo - en este caso el diodo- sino de los elementos del circuito externos a él.
+
+La intersección de la recta de carga estática con la característica estática del dispositivo determina el punto de trabajo Q de coordenadas  ($I_{DQ}$, $V_{DQ}$) - figura \ref{fig:c.6} -. 
+
+
+\subsection{Simplificaciones usuales para el análisis de circuitos con diodos}
+
+\subsubsection{Aproximación de orden cero para la característica estática del diodo}
+La ecuación del diodo ideal $I_D=I_S\left(e^{V_D/V_T}-1\right)$ presenta en la zona de polarización directa una pendiente muy pronunciada, y se puede simplificar a $I_D=I_S\e^{V_D/V_T}$ para $V_D>4V_T \simeq 100mV$ (a $25^\circ C$). De modo que para hallar el punto de reposo ($I_{DQ}$, $V_{DQ}$) de un circuito como el de la figura \ref{fig:c.5}, la característica estática del diodo puede ser aproximada por una semirecta horizontal coincidente con el eje de abscisas ($I_D=0$) hasta un valor de tensión $V_K$ conocido como ``tensión de codo'' seguida por otra; ésta vertical, pasando por $V_K$ - figura \ref{fig:c.7}-.
+
+El valor de la tensión de codo se encuentra cerca de los $0.7V$ para diodos de silicio; $0.2V$ para los diodos de germanio y metal-semiconductor (dido Schottky), y entre $1.2V$ y $1.7V$ para los diodos LED.
+\begin{figure}[!htbp]
+    \centering
+    \includegraphics[scale=1]{figurac07.pdf}
+    \caption{}
+    \label{fig:c.7}
+\end{figure}
+
+
+Este tipo de modelización del diodo es aplicable también en circuitos en lo que el diodo permanece en polarización directa o inversa durante ciertos intervalos de tiempo definidos, ante la aplicación de señales variables de gran amplitud; tales como los recortadores. Se entiende que la denominación de polarización directa o inversa se refiere a cuando está bien definida, es decir suficientemente alejados del origen (por ejemplo, en el caso de diodos de silicio, para valores superiores a $0.5V$ en una u otra polaridad).
+
+
+
+
+
+
 \chapter{Trazado de curvas mediante PSpice}
-\chapter{Formas de onda en el circuito de salida de un amplificador básico en emisor común para distintas amplitudes de $v_{be}$ y distintos puntos de reposo}
+\chapter{Formas de onda en el circuito de salifa de un amplificador básico en emisor común para distintas amplitudes de $v_{be}$ y distintos puntos de reposo}
+\chapter{Introducción al funcionamiento de los osciladores}
 
 \end{appendices}
 
